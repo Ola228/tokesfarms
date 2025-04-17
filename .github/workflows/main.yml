@@ -1,0 +1,25 @@
+name: 🚀 Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch (e.g., master)
+
+jobs:
+  deploy:
+    name: 🎉 Deploy via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          server-dir: / # ✅ FINAL FIX: Directly target the correct folder
+          exclude: |
+            **/.git*
+            **/.git*/**
